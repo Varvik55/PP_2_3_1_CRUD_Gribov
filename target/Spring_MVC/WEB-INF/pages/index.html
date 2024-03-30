@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<table>
+    <thead>
+    <tr>
+        <th>МАРКА</th>
+        <th>МОДЕЛЬ</th>
+        <th>ГОД</th>
+    </tr>
+    </thead>
+    <tbody>
+
+    <tr th:each="user : ${people}">
+        <td th:text="${user.getId()}"></td>
+        <td th:text="${user.getAge()}"></td>
+        <td th:text="${user.getName()}"></td>
+        <td th:text="${user.getLastname()}"></td>
+    </tr>
+    </tbody>
+</table>
+<a href="/addUserPage">
+    <button>Добавить нового пользователя</button>
+</a>
+</div>
+</body>
+</html>
