@@ -1,6 +1,7 @@
 package web.repository;
 
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import web.model.User;
 
 import javax.persistence.EntityManager;
@@ -11,44 +12,37 @@ import java.util.List;
 public class UserRepositoryImpl implements UserRepository{
 
     @PersistenceContext
-    EntityManager entityManager;
+    private EntityManager entityManager;
 
     @Override
     public List<User> getAllUsers() {
-            return entityManager.createQuery("from User", User.class).getResultList();
+        return entityManager.createQuery("from User", User.class).getResultList();
     }
 
     @Override
     public void createUser(User user) {
         entityManager.persist(user);
         entityManager.flush();
-
     }
-
+    @Transactional
     @Override
     public void updateUser(User user) {
-        User existingUser = entityManager.find(User.class, user.getId());
-
-        if (existingUser != null) {
-            existingUser.setAge(user.getAge());
-            existingUser.setName(user.getName());
-            existingUser.setLastname(user.getLastname());
-
-
-            entityManager.merge(existingUser);
-        } else {
-            // Обработка случая, если пользователь не найден
-            throw new EntityNotFoundException("Пользователь с ID " + user.getId() + " не найден.");
-        }
+        entityManager.merge(user);
     }
-
+    @Transactional
     @Override
     public User readUser(long id) {
-        return entityManager.find(User.class,id);
+        return entityManager.find(User.class, id);
     }
 
     @Override
-    public User deleteUser(long id) {
-        return null;
+    public User deleteUser(long id) throws NullPointerException {
+        User user = readUser(id);
+        if (null == user) {
+            throw new NullPointerException("User not found");
+        }
+        entityManager.remove(user);
+        entityManager.flush();
+        return user;
     }
 }

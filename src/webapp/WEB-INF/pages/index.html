@@ -3,29 +3,41 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title></title>
+    <title>Данные о пользователях</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f2f2f2;
+        }
+
+        button {
+            padding: 5px 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            border-radius: 3px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+
+        /* Дополнительные стили для кнопок внутри таблицы */
+        table button {
+            font-size: 14px;
+        }
+    </style>
 </head>
 <body>
-<table>
-    <thead>
-    <tr>
-        <th>МАРКА</th>
-        <th>МОДЕЛЬ</th>
-        <th>ГОД</th>
-    </tr>
-    </thead>
-    <tbody>
 
-    <tr th:each="user : ${people}">
-        <td th:text="${user.getId()}"></td>
-        <td th:text="${user.getAge()}"></td>
-        <td th:text="${user.getName()}"></td>
-        <td th:text="${user.getLastname()}"></td>
-    </tr>
-    </tbody>
-</table>
-<a href="/reg">
-    <button>Добавить нового пользователя</button>
+<h1>СПИСОК ПОЛЬЗОВАТЕЛЕЙ ЗАДАНИЕ 2.3.1</h1>
+
+<a th:href="@{/users}">
+    <button>Начать</button>
 </a>
 </div>
 </body>
