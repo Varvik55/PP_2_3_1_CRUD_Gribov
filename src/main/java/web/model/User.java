@@ -1,24 +1,45 @@
 package web.model;
 
-import lombok.*;
+
+
+
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
+import java.util.Objects;
 
 @Entity
-@AllArgsConstructor
-@NoArgsConstructor
-@EqualsAndHashCode
 @Table(name = "Users")
 public class User {
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name")
+
+    @NotBlank(message = "Поле не должно быть пустым")
+    @Size(min = 2, max = 30, message = "Поле должно содержать от 2 до 30 символов")
+    @Pattern(regexp = "^[A-Za-z]+$", message = "Имя должно содержать только буквы")
     private String name;
-    @Column(name = "lastname")
+
+
+    @Size(min = 2, max = 30, message = "Поле должно содержать от 2 до 30 символов")
+    @Pattern(regexp = "^[A-Za-z]+$", message = "Фамилия должна содержать только буквы")
     private String lastname;
-    @Column(name = "age")
-    private int age;
+
+    @NotNull(message = "Поле не должно быть пустым")
+    @Min(value = 1, message = "Возраст должен быть от одного года")
+    @Max(value = 150, message = "возраст не может быть больше 150 лет")
+    private Integer age=1;
+
+    public User(Long id, String name, String lastname, int age) {
+        this.id = id;
+        this.name = name;
+        this.lastname = lastname;
+        this.age = age;
+    }
+
+    public User() {
+
+    }
 
     public Long getId() {
         return id;
@@ -26,14 +47,6 @@ public class User {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getLastname() {
@@ -44,11 +57,46 @@ public class User {
         this.lastname = lastname;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setAge(Integer age) {
+        this.age = age;
+    }
+
     public int getAge() {
         return age;
     }
 
     public void setAge(int age) {
         this.age = age;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return age == user.age && Objects.equals(id, user.id) && Objects.equals(name, user.name) && Objects.equals(lastname, user.lastname);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, lastname, age);
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", lastname='" + lastname + '\'' +
+                ", age=" + age +
+                '}';
     }
 }

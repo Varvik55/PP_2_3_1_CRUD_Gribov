@@ -29,12 +29,12 @@ public class UserServiseImpl implements UserServise{
         }
     }
 
-
+    @Transactional
     public void createUser(User user) {
         userRepository.createUser(user);
     }
 
-
+    @Transactional
     public void updateUser(User user) {
        userRepository.createUser(user);
     }
@@ -43,9 +43,13 @@ public class UserServiseImpl implements UserServise{
     public User readUser(long id) {
         return userRepository.readUser(id);
     }
-
+    @Transactional
     @Override
     public User deleteUser(long id) {
+
+        if (null == userRepository.readUser(id)) {
+            throw new NullPointerException("User not found");
+        }
         return userRepository.deleteUser(id);
     }
 

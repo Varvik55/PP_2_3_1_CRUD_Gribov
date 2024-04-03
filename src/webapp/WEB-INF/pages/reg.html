@@ -67,18 +67,26 @@
         a.btn:hover {
             background-color: #e2e6ea;
         }
+        div {
+            font-size: smaller; /* Задаем меньший размер шрифта */
+        }
     </style>
 </head>
 <body>
+
 <h2>Введите данные о пользователе</h2>
 <form th:method="POST" th:action="@{/users}" th:object="${user}">
     <input type="hidden" th:field="*{id}" th:value="*{getId()}">
+
+    <div th:if="${#fields.hasErrors('age')}" th:errors="*{age}"></div>
     <label for="age">Возраст:</label><br>
     <input type="text" id="age" name="age" th:value="${user.age}"><br>
 
+    <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
     <label for="name">Имя:</label><br>
     <input type="text" id="name" name="name" th:value="${user.name}"><br>
 
+    <div th:if="${#fields.hasErrors('lastname')}" th:errors="*{lastname}"></div>
     <label for="lastname">Фамилия:</label><br>
     <input type="text" id="lastname" name="lastname" th:value="${user.lastname}"><br><br>
 

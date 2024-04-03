@@ -38,9 +38,6 @@ public class UserRepositoryImpl implements UserRepository{
     @Override
     public User deleteUser(long id) throws NullPointerException {
         User user = readUser(id);
-        if (null == user) {
-            throw new NullPointerException("User not found");
-        }
         entityManager.remove(user);
         entityManager.flush();
         return user;
