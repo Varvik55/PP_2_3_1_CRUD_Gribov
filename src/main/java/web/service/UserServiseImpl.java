@@ -14,7 +14,7 @@ public class UserServiseImpl implements UserServise{
     public UserServiseImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
-
+    @Transactional(readOnly = true)
     @Override
     public List<User> getAllUsers() {
         return userRepository.getAllUsers();
@@ -29,21 +29,20 @@ public class UserServiseImpl implements UserServise{
         }
     }
 
-    @Transactional
     public void createUser(User user) {
         userRepository.createUser(user);
     }
 
-    @Transactional
+
     public void updateUser(User user) {
        userRepository.createUser(user);
     }
-
+    @Transactional(readOnly = true)
     @Override
     public User readUser(long id) {
         return userRepository.readUser(id);
     }
-    @Transactional
+
     @Override
     public User deleteUser(long id) {
 
@@ -52,6 +51,4 @@ public class UserServiseImpl implements UserServise{
         }
         return userRepository.deleteUser(id);
     }
-
-
 }

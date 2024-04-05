@@ -1,25 +1,29 @@
 package web.model;
 
-
-
-
-
-import javax.persistence.*;
-import javax.validation.constraints.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.GenerationType;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.util.Objects;
 
 @Entity
 @Table(name = "Users")
 public class User {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
 
     @NotBlank(message = "Поле не должно быть пустым")
     @Size(min = 2, max = 30, message = "Поле должно содержать от 2 до 30 символов")
     @Pattern(regexp = "^[A-Za-z]+$", message = "Имя должно содержать только буквы")
     private String name;
-
 
     @Size(min = 2, max = 30, message = "Поле должно содержать от 2 до 30 символов")
     @Pattern(regexp = "^[A-Za-z]+$", message = "Фамилия должна содержать только буквы")

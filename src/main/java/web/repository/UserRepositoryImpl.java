@@ -24,12 +24,12 @@ public class UserRepositoryImpl implements UserRepository{
         entityManager.persist(user);
         entityManager.flush();
     }
-    @Transactional
+
     @Override
     public void updateUser(User user) {
         entityManager.merge(user);
     }
-    @Transactional
+
     @Override
     public User readUser(long id) {
         return entityManager.find(User.class, id);
